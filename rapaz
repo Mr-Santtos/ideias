@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void crivo_menor_divisor(int n, unsigned int *spf, int *num_primos) {
+    for (unsigned int i = 2; i <= n; i++) {
+        if (spf[i] == 0) {
+            spf[i] = i;
+            (*num_primos)++;
+            for (unsigned int j = i * i; j <= n; j += i) {
+                if (spf[j] == 0) {
+                    spf[j] = i;
+                }
+            }
+        }
+    }
+}
+
+int main() {
+    int limite;
+    printf("Digite até qual número deseja verificar: ");
+    scanf("%d", &limite);
+
+    // Alocação
+    unsigned int *spf = (unsigned int *)calloc(limite + 1, sizeof(unsigned int));
+    if (!spf) {
+        printf("Erro ao alocar memória\n");
+        return 1;
+    }
+
+    int num_primos = 0;
+    clock_t inicio_calculo = clock();
+    crivo_menor_divisor(limite, spf, &num_primos);
+    clock_t fim_calculo = clock();
+
+    // Aloca array para armazenar os não primos
+    int *nao_primos = (int *)malloc((limite + 1) * sizeof(int));
+    if (!nao_primos) {
+        printf("Erro ao alocar memória para os não primos\n");
+        free(spf);
+        return 1;
+    }
+
+    int count_divisores = 0;
+    for (int i = 2; i <= limite; i++) {
+        if (spf[i] != i) {
+            nao_primos[count_divisores++] = i;
+        }
+    }
+
+    clock_t inicio_impressao = clock();
+
+
+    int inicio_impressao_10p = count_divisores - (count_divisores / 10);
+
+    for (int i = inicio_impressao_10p; i < count_divisores; i++) {
+        int num = nao_primos[i];
+        printf("%d não é primo. Menor divisor: %d\n", num, spf[num]);
+    }
+
+    clock_t fim_impressao = clock();
+
+    printf("\nResumo final:\n");
+    printf("Total de primos: %d\n", num_primos);
+    printf("Total de números não primos: %d\n", count_divisores);
+    printf("Tempo de cálculo: %.4f segundos\n", (double)(fim_calculo - inicio_calculo) / CLOCKS_PER_SEC);
+    printf("Tempo de impressão: %.4f segundos\n", (double)(fim_impressao - inicio_impressao) / CLOCKS_PER_SEC);
+
+    free(spf);
+    free(nao_primos);
+    return 0;
+}
