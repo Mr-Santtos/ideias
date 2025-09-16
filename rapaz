@@ -1,72 +1,66 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+Matemática:
+Aritmética básica (frações, potências, raízes, porcentagem)
+Equações do 1º e 2º grau
+Funções (afim, quadrática, exponencial, logarítmica)
+Progressões (PA/PG)
+Matrizes e determinantes
+Probabilidade e estatística descritiva
+Trigonometria
+Geometria analítica
+Cálculo: limites, derivadas, integrais simples
+Equações diferenciais simples (Euler, Runge-Kutta básico)
 
-void crivo_menor_divisor(int n, unsigned int *spf, int *num_primos) {
-    for (unsigned int i = 2; i <= n; i++) {
-        if (spf[i] == 0) {
-            spf[i] = i;
-            (*num_primos)++;
-            for (unsigned int j = i * i; j <= n; j += i) {
-                if (spf[j] == 0) {
-                    spf[j] = i;
-                }
-            }
-        }
-    }
-}
+Química:
+Balanceamento de reações
+Estequiometria
+Cálculo de concentrações de soluções
+Leis dos gases
+pH/pOH automático
+Eletroquímica (força eletromotriz, ΔG, etc.)
 
-int main() {
-    int limite;
-    printf("Digite até qual número deseja verificar: ");
-    scanf("%d", &limite);
+Física:
+Cinemática (tempo, espaço, velocidade, aceleração)
+Dinâmica (força, peso, atrito)
+Energia e potência
+Gravitação
+Termodinâmica básica (ΔU = Q – W, eficiência)
+Óptica geométrica (espelhos, lentes)
+Eletrostática (Lei de Coulomb, campo, potencial)
+Corrente elétrica (Ohm, potência elétrica)
+Indução eletromagnética básica
 
-    // Alocação
-    unsigned int *spf = (unsigned int *)calloc(limite + 1, sizeof(unsigned int));
-    if (!spf) {
-        printf("Erro ao alocar memória\n");
-        return 1;
-    }
+Elétrica/Eletrônica:
+Leis de Ohm e Kirchhoff
+Associação de resistores, capacitores, indutores
+Impedância em CA (Z = R + jX)
+Transformadores simples
+Fator de potência
+Divisor de tensão/corrente
 
-    int num_primos = 0;
-    clock_t inicio_calculo = clock();
-    crivo_menor_divisor(limite, spf, &num_primos);
-    clock_t fim_calculo = clock();
+⚡ Cabe se turbinar (calculadora de engenheiro hardcore)
 
-    // Aloca array para armazenar os não primos
-    int *nao_primos = (int *)malloc((limite + 1) * sizeof(int));
-    if (!nao_primos) {
-        printf("Erro ao alocar memória para os não primos\n");
-        free(spf);
-        return 1;
-    }
+Matemática avançada:
+Cálculo multivariável (parciais, duplo, triplo)
+Séries de Fourier
+Álgebra linear completa (autovalores, autovetores)
+Análise complexa (números complexos, transformadas)
 
-    int count_divisores = 0;
-    for (int i = 2; i <= limite; i++) {
-        if (spf[i] != i) {
-            nao_primos[count_divisores++] = i;
-        }
-    }
+Química:
+Equilíbrio químico automático (Kc, Kp)
+Cinética química (velocidade de reação)
+ΔH, ΔS, ΔG com tabelas embutidas
+Estruturas orgânicas desenhadas na tela touchscreen (tipo Wolfram Alpha mini)
 
-    clock_t inicio_impressao = clock();
+Física:
+Oscilações (pêndulos, molas)
+Ondas (λ, f, v)
+Equações de Maxwell aplicadas
+Relatividade restrita (dilatação do tempo, contração do espaço)
+Física quântica básica (níveis de energia do hidrogênio, efeito fotoelétrico)
 
-
-    int inicio_impressao_10p = count_divisores - (count_divisores / 10);
-
-    for (int i = inicio_impressao_10p; i < count_divisores; i++) {
-        int num = nao_primos[i];
-        printf("%d não é primo. Menor divisor: %d\n", num, spf[num]);
-    }
-
-    clock_t fim_impressao = clock();
-
-    printf("\nResumo final:\n");
-    printf("Total de primos: %d\n", num_primos);
-    printf("Total de números não primos: %d\n", count_divisores);
-    printf("Tempo de cálculo: %.4f segundos\n", (double)(fim_calculo - inicio_calculo) / CLOCKS_PER_SEC);
-    printf("Tempo de impressão: %.4f segundos\n", (double)(fim_impressao - inicio_impressao) / CLOCKS_PER_SEC);
-
-    free(spf);
-    free(nao_primos);
-    return 0;
-}
+Elétrica:
+Análise de circuitos AC complexos (Fasores)
+Diagramas de Bode
+Conversores de energia (retificadores, inversores)
+Máquinas elétricas (equações de torque, rendimento)
+Controle PID básico
